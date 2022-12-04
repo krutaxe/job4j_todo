@@ -20,16 +20,16 @@ Java 17, Maven 3.8, PostgreSQL 14
 
 
 ### *Список невыполненых задач*
-![](../../Users/Дмитрий Анатольевич/Pictures/todo1.jpg)
+![](img/todo1.jpg)
 
 ### *Подробности задачи*
-![](../../Users/Дмитрий Анатольевич/Pictures/todo2.jpg)
+![](img/todo2.jpg)
 
 ### *Добавление задачи*
-![](../../Users/Дмитрий Анатольевич/Pictures/todo3.jpg)
+![](img/todo3.jpg)
 
 ### *Редактирование задачи*
-![](../../Users/Дмитрий Анатольевич/Pictures/todo4.jpg)
+![](img/todo4.jpg)
 
 ### *Список выполненых задач задач*
-![](../../Users/Дмитрий Анатольевич/Pictures/todo5.jpg)
+![](img/todo5.jpg)
