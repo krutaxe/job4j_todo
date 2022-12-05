@@ -5,17 +5,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.User;
-
 import org.hibernate.query.Query;
-
-import java.sql.SQLException;
 import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
 public class UserStore {
 
-    private SessionFactory sf;
+    private final SessionFactory sf;
 
     public Optional<User> add(User user) {
         Optional<User> rsl;

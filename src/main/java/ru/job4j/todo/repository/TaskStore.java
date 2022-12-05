@@ -6,60 +6,41 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Task;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
 public class TaskStore {
     private final SessionFactory sf;
+    private final CrudRepository crudRepository;
 
     public List<Task> findAll() {
-        try (Session session = sf.openSession()) {
-         return session.createQuery("FROM Task order by id", Task.class).list();
-        }
+        return crudRepository.query("FROM Task order by id", Task.class);
     }
 
     public void save(Task task) {
-        try (Session session = sf.openSession()) {
-            session.beginTransaction();
-            session.save(task);
-            session.getTransaction().commit();
-        }
+        crudRepository.run(session -> session.persist(task));
     }
 
     public Task findById(int id) {
-        try (Session session = sf.openSession()) {
-            return session.get(Task.class, id);
-        }
+        return crudRepository.optional("from Task where id = :fId", Task.class,
+                Map.of("fId", id)).get();
     }
 
     public void delete(int id) {
-        try (Session session = sf.openSession()) {
-            session.beginTransaction();
-            session.delete(session.get(Task.class, id));
-            session.getTransaction().commit();
-        }
+        crudRepository.run(session -> session.delete(session.get(Task.class, id)));
     }
 
     public void completed(int id) {
-        try (Session session = sf.openSession()) {
-            session.beginTransaction();
-            Task task = session.get(Task.class, id);
+        crudRepository.run(session -> {
+            Task task = session.get(Task.class , id);
             task.setDone(true);
-            session.getTransaction().commit();
-        }
+        });
     }
 
     public void update(int id, Task task) {
-        try (Session session = sf.openSession()) {
-            session.beginTransaction();
-            Task taskUpdate = session.get(Task.class, task.getId());
-            taskUpdate.setName(task.getName());
-            taskUpdate.setDescription(task.getDescription());
-            session.merge(taskUpdate);
-            session.getTransaction().commit();
-        }
+        crudRepository.run(session -> session.merge(task));
     }
 }
