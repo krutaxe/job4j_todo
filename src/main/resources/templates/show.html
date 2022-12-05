@@ -25,6 +25,7 @@
                 <a class="nav-item nav-link active" th:href="@{/tasks}">Все задачи</a>
                 <a class="nav-item nav-link" th:href="@{/tasksIsDone}">Выполненные задачи</a>
                 <a class="nav-item nav-link" th:href="@{/tasksNotDone}">Новые задачи</a>
+                <a class="nav-item nav-link" th:href="@{/addUser}">Зарегистрироваться</a>
             </div>
         </div>
     </nav>
@@ -59,7 +60,7 @@
 
 
         <div class="container-buttons">
-            <form th:method="POST" th:action="@{/show/{id}(id=${task.getId()})}">
+            <form th:method="POST" th:action="@{/tasks/show/{id}(id=${task.getId()})}">
                 <input type="submit" value="Выполнить">
             </form>
             <br>

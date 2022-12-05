@@ -25,6 +25,7 @@
                 <a class="nav-item nav-link active" th:href="@{/tasks}">Все задачи</a>
                 <a class="nav-item nav-link" th:href="@{/tasksIsDone}">Выполненные задачи</a>
                 <a class="nav-item nav-link" th:href="@{/tasksNotDone}">Новые задачи</a>
+                <a class="nav-item nav-link" th:href="@{/addUser}">Зарегистрироваться</a>
             </div>
         </div>
     </nav>
@@ -34,7 +35,7 @@
                 Новая задача
             </div>
             <div class="card-body">
-                <form th:action="@{/save}" method="POST" enctype="multipart/form-data">
+                <form th:action="@{/tasks/save}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="0"/>
                     <div class="form-group">
                         <label for="name">Название задачи</label>

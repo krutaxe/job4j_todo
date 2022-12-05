@@ -10,6 +10,7 @@ import ru.job4j.todo.service.TaskService;
 
 @Controller
 @AllArgsConstructor
+@RequestMapping("/tasks")
 public class TaskController {
     private final TaskService taskService;
 
@@ -24,13 +25,13 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
-    @GetMapping("tasks/{id}")
+    @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id) {
         model.addAttribute("task", taskService.findById(id));
         return "show";
     }
 
-    @PostMapping("/tasks/{id}")
+    @PostMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         taskService.delete(id);
         return "redirect:/tasks";
@@ -42,7 +43,7 @@ public class TaskController {
         return "redirect:/tasksIsDone";
     }
 
-    @GetMapping("tasks/{id}/edit")
+    @GetMapping("/{id}/edit")
     private String edite(Model model, @PathVariable("id") int id) {
         model.addAttribute("task", taskService.findById(id));
         return "edite";

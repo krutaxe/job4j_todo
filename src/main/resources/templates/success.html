@@ -15,7 +15,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-    <title>TODO LIST</title>
+    <title>TODO LIST авторизация</title>
 </head>
 <body>
 <div class="container">
@@ -25,55 +25,26 @@
                 <a class="nav-item nav-link active" th:href="@{/tasks}">Все задачи</a>
                 <a class="nav-item nav-link" th:href="@{/tasksIsDone}">Выполненные задачи</a>
                 <a class="nav-item nav-link" th:href="@{/tasksNotDone}">Новые задачи</a>
-                <a class="nav-item nav-link" th:if="${userSession.name == 'Гость'}" th:href="@{/loginPage}">
-                    <span th:text="${userSession.name}"></span>
-                    <span> | Войти</span>
-                </a>
-                <a class="nav-item nav-link" th:if="${userSession.name != 'Гость'}" th:href="@{/logout}">
-                    <span th:text="${userSession.name}"></span>
-                    <span th:text="${userSession.login}"></span>
-                    <span> | Выйти</span>
-                </a>
+                <a class="nav-item nav-link" th:href="@{/addUser}">Зарегистрироваться</a>
             </div>
         </div>
     </nav>
     <div class="row">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Задача</th>
-                <th scope="col">Дата создания</th>
-                <th scope="col">Статус</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="task: ${tasks}">
-                <td th:text="${task.id}"/>
-                <td>
-                    <a th:href="@{/tasks/{id}(id=${task.getId()})}"
-                       th:text="${task.name}"></a>
-                </td>
-                <td th:text="${task.getCreated()}"/>
-                <td>
-                    <span th:if="${task.done}">
-                        Выполнено
-            <i class="fa fa-check-square-o"></i>
-        </span>
-                    <span th:if="${!task.done}">
-                        Новое
-            <i class="fa fa-square-o"></i>
-        </span>
-            </tr>
-            </tbody>
-        </table>
+        <div class="card" style="width: 100%">
+            <div class="card-header">
+                Новый пользователь.
+            </div>
+            <div class="card-body">
+                <form th:action="@{/loginPage}" method="GET" enctype="multipart/form-data">
+                    <h4>Вы успешно зарегистрировались!</h4>
+                    <br>
+                    <h4>Аторизируйтесь</h4>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Авторизоваться</button>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <form th:method="GET" th:action="@{/tasks/createdForm}">
-        <input type="submit" value="Добавить задачу">
-    </form>
-
-
 </div>
 </body>
 </html>

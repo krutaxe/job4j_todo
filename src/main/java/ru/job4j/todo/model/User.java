@@ -3,16 +3,15 @@ package ru.job4j.todo.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
-@Entity
-@Table(name = "tasks")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Task {
+@Table(name = "todo_user")
+@ToString
+public class User {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +19,8 @@ public class Task {
 
     private String name;
 
-    private String description;
+    @EqualsAndHashCode.Include
+    private String login;
 
-    private LocalDate created = LocalDate.now();
-
-    private boolean done = false;
+    private String password;
 }
