@@ -1,7 +1,6 @@
 package ru.job4j.todo.model;
 
 import lombok.*;
-
 import javax.persistence.*;
 
 @Data
