@@ -11,11 +11,11 @@ import java.util.Set;
 @Component
 public class AuthFilter implements Filter {
 
-    private final Set<String> uriSet = Set.of("/loginPage", "/login", "/addUser",
-            "/registration", "/fail", "/success");
+    private final Set<String> uriSet = Set.of("loginPage", "login", "addUser",
+            "registration", "fail", "success");
 
-    private boolean checkUri(String uri, Set<String> uriSet) {
-        return uriSet.contains(uri);
+    private boolean checkUri(String uri) {
+        return uriSet.stream().anyMatch(uri::endsWith);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String uri = request.getRequestURI();
-        if (checkUri(uri, uriSet)) {
+        if (checkUri(uri)) {
             filterChain.doFilter(request, response);
             return;
         }
