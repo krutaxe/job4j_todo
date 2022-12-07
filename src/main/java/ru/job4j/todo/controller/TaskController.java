@@ -7,12 +7,31 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.service.TaskService;
+import ru.job4j.todo.util.SessionHttp;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/tasks")
 public class TaskController {
     private final TaskService taskService;
+
+    @GetMapping("/IsDone")
+    public String indexIsDone(Model model, HttpSession session) {
+        SessionHttp.getSessionUser(model, session);
+        model.addAttribute("tasks", taskService.findAll()
+                .stream().filter(Task::isDone).toList());
+        return "tasks";
+    }
+
+    @GetMapping("/NotDone")
+    public String indexNotDone(Model model, HttpSession session) {
+        SessionHttp.getSessionUser(model, session);
+        model.addAttribute("tasks", taskService.findAll()
+                .stream().filter(e -> !e.isDone()).toList());
+        return "tasks";
+    }
 
     @GetMapping("/createdForm")
     public String create() {
@@ -22,7 +41,7 @@ public class TaskController {
     @PostMapping("/save")
     public String add(@ModelAttribute Task task) {
         taskService.save(task);
-        return "redirect:/tasks";
+        return "redirect:/";
     }
 
     @GetMapping("/{id}")
@@ -34,13 +53,13 @@ public class TaskController {
     @PostMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         taskService.delete(id);
-        return "redirect:/tasks";
+        return "redirect:/";
     }
 
     @PostMapping("/show/{id}")
     public String completed(@PathVariable("id") int id) {
         taskService.completed(id);
-        return "redirect:/tasksIsDone";
+        return "redirect:/tasks/IsDone";
     }
 
     @GetMapping("/{id}/edit")

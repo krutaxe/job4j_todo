@@ -15,26 +15,10 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
     private final TaskService taskService;
 
-    @GetMapping("/tasks")
+    @GetMapping("/")
     public String index(Model model, HttpSession session) {
         SessionHttp.getSessionUser(model, session);
         model.addAttribute("tasks", taskService.findAll());
-        return "tasks";
-    }
-
-    @GetMapping("/tasksIsDone")
-    public String indexIsDone(Model model, HttpSession session) {
-        SessionHttp.getSessionUser(model, session);
-        model.addAttribute("tasks", taskService.findAll()
-                .stream().filter(Task::isDone).toList());
-        return "tasks";
-    }
-
-    @GetMapping("/tasksNotDone")
-    public String indexNotDone(Model model, HttpSession session) {
-        SessionHttp.getSessionUser(model, session);
-        model.addAttribute("tasks", taskService.findAll()
-                .stream().filter(e -> !e.isDone()).toList());
         return "tasks";
     }
 }

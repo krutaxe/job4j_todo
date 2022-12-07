@@ -22,9 +22,9 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" th:href="@{/tasks}">Все задачи</a>
-                <a class="nav-item nav-link" th:href="@{/tasksIsDone}">Выполненные задачи</a>
-                <a class="nav-item nav-link" th:href="@{/tasksNotDone}">Новые задачи</a>
+                <a class="nav-item nav-link active" th:href="@{/}">Все задачи</a>
+                <a class="nav-item nav-link" th:href="@{/tasks/IsDone}">Выполненные задачи</a>
+                <a class="nav-item nav-link" th:href="@{/tasks/NotDone}">Новые задачи</a>
                 <a class="nav-item nav-link" th:if="${userSession.name == 'Гость'}" th:href="@{/loginPage}">
                     <span th:text="${userSession.name}"></span>
                     <span> | Войти</span>
