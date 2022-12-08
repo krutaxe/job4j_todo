@@ -1,6 +1,5 @@
 package ru.job4j.todo.controller;
 
-
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.service.TaskService;
 import ru.job4j.todo.util.SessionHttp;
-
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -52,7 +50,11 @@ public class TaskController {
 
     @PostMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        taskService.delete(id);
+        try {
+            taskService.delete(id);
+        } catch (Exception e) {
+            return "task/failDelete";
+        }
         return "redirect:/";
     }
 
@@ -64,13 +66,21 @@ public class TaskController {
 
     @GetMapping("/{id}/edit")
     private String edite(Model model, @PathVariable("id") int id) {
-        model.addAttribute("task", taskService.findById(id));
+        try {
+            model.addAttribute("task", taskService.findById(id));
+        } catch (Exception e) {
+            return "task/failEdit";
+        }
         return "task/edite";
     }
 
     @PostMapping("/update")
     public String update(@ModelAttribute("task") Task task) {
-        taskService.update(task.getId(), task);
+        try {
+            taskService.update(task);
+        } catch (Exception e) {
+            return "task/failEdit";
+        }
         return "redirect:/tasks/" + task.getId();
     }
 }

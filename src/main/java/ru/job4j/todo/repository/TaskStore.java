@@ -40,7 +40,7 @@ public class TaskStore {
         });
     }
 
-    public void update(int id, Task task) {
+    public void update(Task task) {
         crudRepository.run(session -> session.merge(task));
     }
 }

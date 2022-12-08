@@ -33,7 +33,7 @@ public class TaskService {
         taskStore.save(task);
     }
 
-    public void update(int id, Task task) {
-        taskStore.update(id, task);
+    public void update(Task task) {
+        taskStore.update(task);
     }
 }
