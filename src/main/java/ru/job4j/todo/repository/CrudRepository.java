@@ -70,21 +70,17 @@ public class CrudRepository {
 
     public <T> T tx(Function<Session, T> command) {
         Session session = sf.openSession();
-        T rsl = null;
         Transaction tx = null;
-        try {
+        try (session){
             tx = session.beginTransaction();
-             rsl = command.apply(session);
+           T rsl = command.apply(session);
             tx.commit();
+            return rsl;
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
-                throw e;
             }
+            throw e;
         }
-        finally {
-            session.close();
-        }
-        return rsl;
     }
 }
