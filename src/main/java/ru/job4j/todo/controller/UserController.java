@@ -23,7 +23,7 @@ public class UserController {
     @GetMapping("/addUser")
     public String addUser(Model model, HttpSession session) {
         SessionHttp.getSessionUser(model, session);
-        return "addUser";
+        return "user/addUser";
     }
 
     @PostMapping("/registration")
@@ -38,12 +38,12 @@ public class UserController {
 
     @GetMapping("/fail")
     public String fail() {
-        return "fail";
+        return "user/fail";
     }
 
     @GetMapping("/success")
     public String success() {
-        return "success";
+        return "user/success";
     }
 
     @GetMapping("/loginPage")
@@ -51,7 +51,7 @@ public class UserController {
             name = "fail", required = false) Boolean fail, HttpSession session) {
         SessionHttp.getSessionUser(model, session);
         model.addAttribute("fail", fail != null);
-        return "login";
+        return "user/login";
     }
 
     @PostMapping("/login")

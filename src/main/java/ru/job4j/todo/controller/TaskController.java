@@ -22,7 +22,7 @@ public class TaskController {
         SessionHttp.getSessionUser(model, session);
         model.addAttribute("tasks", taskService.findAll()
                 .stream().filter(Task::isDone).toList());
-        return "tasks";
+        return "task/tasks";
     }
 
     @GetMapping("/NotDone")
@@ -30,12 +30,12 @@ public class TaskController {
         SessionHttp.getSessionUser(model, session);
         model.addAttribute("tasks", taskService.findAll()
                 .stream().filter(e -> !e.isDone()).toList());
-        return "tasks";
+        return "task/tasks";
     }
 
     @GetMapping("/createdForm")
     public String create() {
-        return "created";
+        return "task/created";
     }
 
     @PostMapping("/save")
@@ -47,7 +47,7 @@ public class TaskController {
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id) {
         model.addAttribute("task", taskService.findById(id));
-        return "show";
+        return "task/show";
     }
 
     @PostMapping("/{id}")
@@ -65,7 +65,7 @@ public class TaskController {
     @GetMapping("/{id}/edit")
     private String edite(Model model, @PathVariable("id") int id) {
         model.addAttribute("task", taskService.findById(id));
-        return "edite";
+        return "task/edite";
     }
 
     @PostMapping("/update")
