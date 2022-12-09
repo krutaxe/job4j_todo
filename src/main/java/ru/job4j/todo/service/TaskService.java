@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.repository.TaskStore;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -21,8 +19,14 @@ public class TaskService {
         return taskStore.findById(id);
     }
 
-    public void delete(int id) {
-        taskStore.delete(id);
+    public boolean delete(int id) {
+        boolean rsl = true;
+        try {
+            taskStore.delete(id);
+        } catch (Exception e) {
+            rsl = false;
+        }
+        return rsl;
     }
 
     public void completed(int id) {
@@ -33,7 +37,13 @@ public class TaskService {
         taskStore.save(task);
     }
 
-    public void update(Task task) {
-        taskStore.update(task);
+    public boolean update(Task task) {
+        boolean rsl = true;
+        try {
+            taskStore.update(task);
+        } catch (Exception e) {
+            rsl = false;
+        }
+        return rsl;
     }
 }

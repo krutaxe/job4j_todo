@@ -50,12 +50,10 @@ public class TaskController {
 
     @PostMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        try {
-            taskService.delete(id);
-        } catch (Exception e) {
-            return "task/failDelete";
+        if (taskService.delete(id)) {
+            return "redirect:/";
         }
-        return "redirect:/";
+        return "task/failDelete";
     }
 
     @PostMapping("/show/{id}")
@@ -76,11 +74,9 @@ public class TaskController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute("task") Task task) {
-        try {
-            taskService.update(task);
-        } catch (Exception e) {
-            return "task/failEdit";
+        if (taskService.update(task)) {
+            return "redirect:/tasks/" + task.getId();
         }
-        return "redirect:/tasks/" + task.getId();
+        return "task/failEdit";
     }
 }
