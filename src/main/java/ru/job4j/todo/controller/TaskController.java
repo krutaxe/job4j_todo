@@ -44,7 +44,7 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id) {
-        model.addAttribute("task", taskService.findById(id));
+        model.addAttribute("task", taskService.findById(id).get());
         return "task/show";
     }
 

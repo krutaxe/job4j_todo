@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.repository.TaskStore;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -15,16 +16,15 @@ public class TaskService {
         return taskStore.findAll();
     }
 
-    public Task findById(int id) {
-        return taskStore.findById(id);
+    public Optional<Task> findById(int id) {
+        return Optional.of(taskStore.findById(id));
     }
 
     public boolean delete(int id) {
-        boolean rsl = true;
-        try {
+        boolean rsl = false;
+        if (findById(id).isPresent()) {
             taskStore.delete(id);
-        } catch (Exception e) {
-            rsl = false;
+            rsl = true;
         }
         return rsl;
     }
@@ -38,11 +38,10 @@ public class TaskService {
     }
 
     public boolean update(Task task) {
-        boolean rsl = true;
-        try {
+        boolean rsl = false;
+        if (findById(task.getId()).isPresent()) {
             taskStore.update(task);
-        } catch (Exception e) {
-            rsl = false;
+            rsl = true;
         }
         return rsl;
     }
