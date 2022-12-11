@@ -44,6 +44,9 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id) {
+        if (taskService.findById(id).isEmpty()) {
+            return "task/failShow";
+        }
         model.addAttribute("task", taskService.findById(id).get());
         return "task/show";
     }

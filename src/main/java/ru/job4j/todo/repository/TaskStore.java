@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Task;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,13 +25,24 @@ public class TaskStore {
         crudRepository.run(session -> session.persist(task));
     }
 
-    public Task findById(int id) {
-        return crudRepository.optional("from Task where id = :fId", Task.class,
-                Map.of("fId", id)).get();
+    public Optional<Task> findById(int id) {
+        Optional<Task> task;
+        try {
+            task = crudRepository.optional("from Task where id = :fId", Task.class,
+                    Map.of("fId", id));
+        } catch (NoResultException e) {
+            task = Optional.empty();
+        }
+        return task;
     }
 
-    public void delete(int id) {
-        crudRepository.run(session -> session.delete(session.get(Task.class, id)));
+    public boolean delete(int id) {
+        boolean rsl = false;
+        if (findById(id).isPresent()) {
+            crudRepository.run(session -> session.delete(session.get(Task.class, id)));
+            rsl = true;
+        }
+        return rsl;
     }
 
     public void completed(int id) {
@@ -40,7 +52,12 @@ public class TaskStore {
         });
     }
 
-    public void update(Task task) {
-        crudRepository.run(session -> session.merge(task));
+    public boolean update(Task task) {
+        boolean rsl = false;
+        if (findById(task.getId()).isPresent()) {
+            crudRepository.run(session -> session.merge(task));
+            rsl = true;
+        }
+        return rsl;
     }
 }

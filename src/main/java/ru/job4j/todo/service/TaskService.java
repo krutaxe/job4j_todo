@@ -17,16 +17,11 @@ public class TaskService {
     }
 
     public Optional<Task> findById(int id) {
-        return Optional.of(taskStore.findById(id));
+        return taskStore.findById(id);
     }
 
     public boolean delete(int id) {
-        boolean rsl = false;
-        if (findById(id).isPresent()) {
-            taskStore.delete(id);
-            rsl = true;
-        }
-        return rsl;
+        return taskStore.delete(id);
     }
 
     public void completed(int id) {
@@ -38,11 +33,6 @@ public class TaskService {
     }
 
     public boolean update(Task task) {
-        boolean rsl = false;
-        if (findById(task.getId()).isPresent()) {
-            taskStore.update(task);
-            rsl = true;
-        }
-        return rsl;
+        return taskStore.update(task);
     }
 }
