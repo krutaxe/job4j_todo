@@ -13,7 +13,7 @@ public class TaskStore {
     private final CrudRepository crudRepository;
 
     public List<Task> findAll() {
-        return crudRepository.query("FROM Task order by id", Task.class);
+        return crudRepository.query("FROM Task t join fetch t.priority order by t.id", Task.class);
     }
 
     public void save(Task task) {
