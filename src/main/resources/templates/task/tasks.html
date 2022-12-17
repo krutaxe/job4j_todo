@@ -45,6 +45,7 @@
                 <th scope="col">Задача</th>
                 <th scope="col">Дата создания</th>
                 <th scope="col">Статус</th>
+                <th scope="col">Пользователь</th>
             </tr>
             </thead>
             <tbody>
@@ -64,6 +65,7 @@
                         Новое
             <i class="fa fa-square-o"></i>
         </span>
+                <td th:text="${task.getUser().name}"/>
             </tr>
             </tbody>
         </table>
