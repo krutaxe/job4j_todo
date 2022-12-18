@@ -25,7 +25,15 @@
                 <a class="nav-item nav-link active" th:href="@{/}">Все задачи</a>
                 <a class="nav-item nav-link" th:href="@{/tasks/IsDone}">Выполненные задачи</a>
                 <a class="nav-item nav-link" th:href="@{/tasks/NotDone}">Новые задачи</a>
-                <a class="nav-item nav-link" th:href="@{/addUser}">Зарегистрироваться</a>
+                <a class="nav-item nav-link" th:if="${userSession.name == 'Гость'}" th:href="@{/loginPage}">
+                    <span th:text="${userSession.name}"></span>
+                    <span> | Войти</span>
+                </a>
+                <a class="nav-item nav-link" th:if="${userSession.name != 'Гость'}" th:href="@{/logout}">
+                    <span th:text="${userSession.name}"></span>
+                    <span th:text="${userSession.login}"></span>
+                    <span> | Выйти</span>
+                </a>
             </div>
         </div>
     </nav>
@@ -46,6 +54,29 @@
                         <label for="name">Описания</label>
                         <input type="text" class="form-control" name="description" id="description">
                     </div>
+
+                    <div class="form-group">
+                        <label for="name">Приоритет</label>
+                        <select class="form-control" id="priorities" name="priorities">
+                            <option th:each="prioritet: ${priorities}"
+                                    th:text="${prioritet.name}"
+                                    th:value="${prioritet.id}">
+
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Категория</label>
+                        <select class="form-control" id="cIds" name="cIds" multiple>
+                            <option th:each="category: ${categories}"
+                                    th:text="${category.name}"
+                                    th:value="${category.id}">
+
+                            </option>
+                        </select>
+                    </div>
+
                     <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
                 </form>
             </div>

@@ -5,8 +5,9 @@ import ru.job4j.todo.model.User;
 import javax.servlet.http.HttpSession;
 
 public class SessionHttp {
+    private SessionHttp() {
 
-    private SessionHttp() {}
+    }
 
     public static void getSessionUser(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");

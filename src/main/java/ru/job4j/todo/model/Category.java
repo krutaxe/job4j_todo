@@ -6,18 +6,28 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Table(name = "priorities")
 @Data
+@Entity
+@Table(name = "categories")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@NoArgsConstructor
 @AllArgsConstructor
-public class Priority {
+@NoArgsConstructor
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
+
     private String name;
-    private int position;
+
+    @ManyToMany(mappedBy = "categories")
+    private List<Task> tasks;
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

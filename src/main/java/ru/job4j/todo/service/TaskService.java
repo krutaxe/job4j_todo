@@ -14,6 +14,7 @@ import java.util.Optional;
 public class TaskService {
     private final TaskStore taskStore;
 
+    @Transactional
     public List<Task> findAll() {
         return taskStore.findAll();
     }

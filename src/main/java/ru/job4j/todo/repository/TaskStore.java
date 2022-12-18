@@ -13,7 +13,8 @@ public class TaskStore {
     private final CrudRepository crudRepository;
 
     public List<Task> findAll() {
-        return crudRepository.query("FROM Task t join fetch t.priority order by t.id", Task.class);
+        return crudRepository.query("SELECT DISTINCT t FROM  Task t "
+                + "left JOIN FETCH t.categories order by t.id", Task.class);
     }
 
     public void save(Task task) {

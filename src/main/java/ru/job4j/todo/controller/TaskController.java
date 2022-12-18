@@ -4,16 +4,26 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.todo.model.Category;
+import ru.job4j.todo.model.Priority;
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.model.User;
+import ru.job4j.todo.service.CategoryService;
+import ru.job4j.todo.service.PriorityService;
 import ru.job4j.todo.service.TaskService;
 import ru.job4j.todo.util.SessionHttp;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/tasks")
 public class TaskController {
     private final TaskService taskService;
+    private final CategoryService categoryService;
+    private final PriorityService priorityService;
 
     @GetMapping("/IsDone")
     public String indexIsDone(Model model, HttpSession session) {
@@ -32,12 +42,22 @@ public class TaskController {
     }
 
     @GetMapping("/createdForm")
-    public String create() {
+    public String create(Model model, HttpSession session) {
+        SessionHttp.getSessionUser(model, session);
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("priorities", priorityService.findAll());
         return "task/created";
     }
 
     @PostMapping("/save")
-    public String add(@ModelAttribute Task task) {
+    public String add(@ModelAttribute Task task,
+                      @RequestParam("priorities") int prioritiesId,
+                      HttpServletRequest request, HttpSession session) {
+        Priority priority = priorityService.findById(prioritiesId);
+        task.setUser((User) session.getAttribute("user"));
+        String[] ids = request.getParameterValues("cIds");
+        task.setPriority(priority);
+        task.setCategories(categoryService.findById(ids));
         taskService.save(task);
         return "redirect:/";
     }
