@@ -15,6 +15,7 @@ import ru.job4j.todo.util.SessionHttp;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -57,7 +58,7 @@ public class TaskController {
         task.setUser((User) session.getAttribute("user"));
         String[] ids = request.getParameterValues("cIds");
         task.setPriority(priority);
-        task.setCategories(categoryService.findById(ids));
+        task.setCategories(categoryService.findByIds(ids));
         taskService.save(task);
         return "redirect:/";
     }
