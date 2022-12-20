@@ -23,9 +23,9 @@ public class CategoryStore {
                 Map.of("fId", id));
     }
 
-    public List<Category> findByIds(String[] ids) {
+    public List<Category> findByIds(Integer[] ids) {
         return crudRepository.query("from Category where id  IN (:fds)",
                 Category.class,
-                Map.of("fds", ids));
+                Map.of("fds", Arrays.asList(ids)));
     }
 }

@@ -17,7 +17,11 @@ public class CategoryService {
     }
 
     public List<Category> findByIds(String[] ids) {
-       return categoryStore.findByIds(ids);
+        Integer[]id = new Integer[ids.length];
+        for (int i = 0; i < ids.length; i++) {
+            id[i] = Integer.parseInt(ids[i]);
+        }
+       return categoryStore.findByIds(id);
     }
 
 }
