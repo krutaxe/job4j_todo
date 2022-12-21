@@ -13,7 +13,11 @@ import ru.job4j.todo.util.SessionHttp;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @Controller
 @AllArgsConstructor
@@ -23,11 +27,19 @@ public class UserController {
     @GetMapping("/addUser")
     public String addUser(Model model, HttpSession session) {
         SessionHttp.getSessionUser(model, session);
+        List<TimeZone> zones = new ArrayList<>();
+        for (String timeId : TimeZone.getAvailableIDs()) {
+            zones.add(TimeZone.getTimeZone(timeId));
+        }
+        model.addAttribute("zones", zones);
+
         return "user/addUser";
     }
 
     @PostMapping("/registration")
-    public String registration(Model model, @ModelAttribute User user) {
+    public String registration(Model model, @ModelAttribute User user,
+                               @RequestParam("zone") String zone) {
+        user.setTimeZone(TimeZone.getTimeZone(ZoneId.of(zone)));
         Optional<User> regUser = userService.add(user);
         if (regUser.isEmpty()) {
             model.addAttribute("message", "Пользователь с таким логином уже существует");

@@ -1,11 +1,16 @@
 package ru.job4j.todo.repository;
 
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Task;
+
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @Repository
 @AllArgsConstructor
@@ -13,8 +18,17 @@ public class TaskStore {
     private final CrudRepository crudRepository;
 
     public List<Task> findAll() {
-        return crudRepository.query("SELECT DISTINCT t FROM  Task t "
+        List<Task> tasks = crudRepository.query("SELECT DISTINCT t FROM  Task t "
                 + "left JOIN FETCH t.categories order by t.id", Task.class);
+        for (Task task : tasks) {
+            if (task.getUser().getTimeZone() == null) {
+                task.getUser().setTimeZone(TimeZone.getDefault());
+            } else {
+                task.getCreated().atZone(
+                        ZoneId.of(task.getUser().getTimeZone().getID()));
+            }
+        }
+        return tasks;
     }
 
     public void save(Task task) {

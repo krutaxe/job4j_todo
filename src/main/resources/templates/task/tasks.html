@@ -57,7 +57,7 @@
                     <a th:href="@{/tasks/{id}(id=${task.getId()})}"
                        th:text="${task.name}"></a>
                 </td>
-                <td th:text="${task.getCreated()}"/>
+                <td th:text="${#temporals.format(task.created, 'HH:mm dd-MM-yyy')}"/>
                 <td>
                     <span th:if="${task.done}">
                         Выполнено

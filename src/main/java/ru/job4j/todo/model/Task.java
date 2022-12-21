@@ -1,9 +1,11 @@
 package ru.job4j.todo.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -23,7 +25,7 @@ public class Task {
 
     private String description;
 
-    private LocalDate created = LocalDate.now();
+    private LocalDateTime created = LocalDateTime.now();
 
     private boolean done = false;
 
