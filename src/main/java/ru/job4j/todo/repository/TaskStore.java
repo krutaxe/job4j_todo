@@ -25,8 +25,8 @@ public class TaskStore {
             if (task.getUser().getTimeZone() == null) {
                 task.getUser().setTimeZone(TimeZone.getDefault());
             } else {
-                task.setCreated(LocalDateTime
-                        .now(ZoneId.of(task.getUser().getTimeZone().getID())));
+                    ZoneId zoneId = task.getUser().getTimeZone().toZoneId();
+                    task.getCreated().atZone(zoneId).withZoneSameInstant(zoneId);
             }
         }
         return tasks;
@@ -47,7 +47,7 @@ public class TaskStore {
     }
 
     public void update(Task task) {
-            crudRepository.run(session -> session.merge(task));
+        crudRepository.run(session -> session.merge(task));
     }
 
     public void completed(int id) {
