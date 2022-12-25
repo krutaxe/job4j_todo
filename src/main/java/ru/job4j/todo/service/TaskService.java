@@ -6,6 +6,7 @@ import ru.job4j.todo.model.Task;
 import ru.job4j.todo.repository.TaskStore;
 
 import javax.transaction.Transactional;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,14 @@ public class TaskService {
 
     @Transactional
     public List<Task> findAll() {
-        return taskStore.findAll();
+        List<Task> taskList = taskStore.findAll();
+        taskList.forEach(task -> {
+            task.setCreated(task.getCreated()
+                    .atZone(ZoneId.of(task.getUser().getTimeZone().getID()))
+                    .withZoneSameInstant(ZoneId.of(task.getUser().getTimeZone().getID()))
+                    .toLocalDateTime());
+        });
+        return taskList;
     }
 
     public Optional<Task> findById(int id) {

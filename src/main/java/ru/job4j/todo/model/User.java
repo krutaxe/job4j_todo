@@ -2,7 +2,6 @@ package ru.job4j.todo.model;
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.Date;
 import java.util.TimeZone;
 
 @Data
@@ -26,5 +25,5 @@ public class User {
     private String password;
 
     @Column(name = "user_zone")
-    private TimeZone timeZone;
+    private TimeZone timeZone = TimeZone.getDefault();
 }

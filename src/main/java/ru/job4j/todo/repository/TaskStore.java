@@ -19,17 +19,8 @@ public class TaskStore {
     private final CrudRepository crudRepository;
 
     public List<Task> findAll() {
-        List<Task> tasks = crudRepository.query("SELECT DISTINCT t FROM  Task t "
+        return crudRepository.query("SELECT DISTINCT t FROM  Task t "
                 + "left JOIN FETCH t.categories order by t.id", Task.class);
-        for (Task task : tasks) {
-            if (task.getUser().getTimeZone() == null) {
-                task.getUser().setTimeZone(TimeZone.getDefault());
-            } else {
-                    ZoneId zoneId = task.getUser().getTimeZone().toZoneId();
-                    task.getCreated().atZone(zoneId).withZoneSameInstant(zoneId);
-            }
-        }
-        return tasks;
     }
 
     public void save(Task task) {
