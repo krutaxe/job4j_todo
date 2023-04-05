@@ -31,7 +31,9 @@ public class UserStore {
                    + "login = :paramLogin and password = :paramPwd");
             query.setParameter("paramLogin", login);
             query.setParameter("paramPwd", pwd);
+            System.out.println();
             return query.uniqueResultOptional();
         }
     }
 }
+

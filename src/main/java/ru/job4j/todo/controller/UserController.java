@@ -42,7 +42,8 @@ public class UserController {
         user.setTimeZone(TimeZone.getTimeZone(ZoneId.of(zone)));
         Optional<User> regUser = userService.add(user);
         if (regUser.isEmpty()) {
-            model.addAttribute("message", "Пользователь с таким логином уже существует");
+            model.addAttribute("message",
+                    "Пользователь с таким логином уже существует");
             return "redirect:/fail";
         }
         return "redirect:/success";

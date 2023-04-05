@@ -1,14 +1,9 @@
 package ru.job4j.todo.model;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 @Entity
 @Table(name = "tasks")

@@ -15,7 +15,7 @@ public class IndexController {
     private final TaskService taskService;
 
     @GetMapping("/")
-    public String index(Model model, HttpSession session) {
+    public String index(Model model, HttpSession session)  {
         SessionHttp.getSessionUser(model, session);
         model.addAttribute("tasks", taskService.findAll());
         return "task/tasks";
